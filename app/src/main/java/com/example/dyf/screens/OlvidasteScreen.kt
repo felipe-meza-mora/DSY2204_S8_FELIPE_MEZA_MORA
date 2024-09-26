@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.dyf.LoginActivity
 import com.example.dyf.data.UserData
 import com.example.dyf.data.UserPreferences
+import com.google.firebase.database.FirebaseDatabase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -122,15 +123,43 @@ fun OlvidasteScreen(userPreferences: UserPreferences) {
     fun recuperar() {
         validateForm()
         if (isFormValid) {
-            val usuario = userList.find { it.correo == correo && it.rut == rut }
-            if (usuario != null) {
-                successMessage = "Tu contraseña es: ${usuario.password}"
-                showSuccessDialog = true
-                vibrate(context, true)  // Vibración de éxito
-            } else {
-                errorMessage = "Los datos ingresados no coinciden con ningún usuario registrado."
-                showErrorDialog = true
-                vibrate(context, false)  // Vibración de error
+            // Obtener referencia a la base de datos
+            val database = FirebaseDatabase.getInstance()
+            val ref = database.getReference("user")
+
+            // Consulta para buscar usuario por correo y RUT
+            ref.orderByChild("correo").equalTo(correo).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val snapshot = task.result
+                    var foundUser: UserData? = null
+
+                    // Iterar sobre los resultados de la consulta
+                    for (data in snapshot.children) {
+                        val user = data.getValue(UserData::class.java)
+                        if (user != null && user.rut == rut) {
+                            foundUser = user
+                            break
+                        }
+                    }
+
+                    // Si se encuentra el usuario
+                    if (foundUser != null) {
+                        successMessage = "Tu contraseña es: ${foundUser.password}"
+                        showSuccessDialog = true
+                        vibrate(context, true)  // Vibración de éxito
+                    } else {
+                        // Si no se encuentra un usuario con ese correo y RUT
+                        errorMessage = "Los datos ingresados no coinciden con ningún usuario registrado."
+                        showErrorDialog = true
+                        vibrate(context, false)  // Vibración de error
+                    }
+                } else {
+                    // Imprime el error para identificar el problema
+                    val exception = task.exception
+                    errorMessage = "Error al conectarse a la base de datos: ${exception?.message}"
+                    showErrorDialog = true
+                    vibrate(context, false)  // Vibración de error
+                }
             }
         }
     }

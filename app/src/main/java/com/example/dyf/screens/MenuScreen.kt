@@ -25,15 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dyf.LoginActivity
 import com.example.dyf.R
-import com.example.dyf.data.UserPreferences
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(userPreferences: UserPreferences) {
+fun MenuScreen() {
     var expanded by remember { mutableStateOf(false) }
-    var userName by remember { mutableStateOf("") }
-
-    val usersList by userPreferences.userPreferencesFlow.collectAsState(initial = emptyList())
+    var userName by remember { mutableStateOf("Usuario") } // Valor predeterminado
     val context = LocalContext.current
 
     fun vibrate(context: Context, isSuccess: Boolean) {
@@ -56,9 +53,10 @@ fun MenuScreen(userPreferences: UserPreferences) {
         }
     }
 
-    LaunchedEffect(usersList) {
-        val loggedInUser = usersList.firstOrNull()
-        userName = loggedInUser?.nombreCompleto ?: "Usuario"
+    // Cargar el nombre del usuario desde SharedPreferences
+    LaunchedEffect(Unit) {
+        val sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        userName = sharedPreferences.getString("userName", "Usuario") ?: "Usuario"
     }
 
     Surface(
@@ -85,7 +83,7 @@ fun MenuScreen(userPreferences: UserPreferences) {
                 ) {
                     Text(
                         text = "Hola, $userName",
-                        fontSize = 20.sp, // Ajustado para igualar a las otras pantallas
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     )
@@ -105,6 +103,15 @@ fun MenuScreen(userPreferences: UserPreferences) {
                             onDismissRequest = { expanded = false },
                             modifier = Modifier.background(Color(0xFFFFC107))
                         ) {
+                            DropdownMenuItem(
+                                text = { Text("Cambiar Contraseña") },
+                                onClick = {
+                                    vibrate(context, false)
+                                    /*val intent = Intent(context, CambioPasswordActivity::class.java)
+                                    context.startActivity(intent) */
+                                }
+                            )
+
                             DropdownMenuItem(
                                 text = { Text("Cerrar sesión") },
                                 onClick = {

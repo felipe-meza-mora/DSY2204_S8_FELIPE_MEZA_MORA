@@ -1,6 +1,5 @@
 package com.example.dyf
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.dyf.data.UserPreferences
 import com.example.dyf.screens.LoginScreen
-import com.example.dyf.ui.theme.DyfTheme
+import com.example.dyf.ui.theme.ui.theme.ui.theme.DyfTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

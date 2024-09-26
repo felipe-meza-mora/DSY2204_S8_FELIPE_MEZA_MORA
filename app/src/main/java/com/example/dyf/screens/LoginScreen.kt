@@ -1,6 +1,5 @@
 package com.example.dyf.screens
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -32,23 +31,21 @@ import com.example.dyf.MenuActivity
 import com.example.dyf.OlvidasteActivity
 import com.example.dyf.R
 import com.example.dyf.RegistrarseActivity
-import com.example.dyf.data.UserPreferences
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
     val context = LocalContext.current
-    val userPreferences = remember { UserPreferences(context) }
-
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     var emailError by remember { mutableStateOf<String?>(null) }
     var passwordError by remember { mutableStateOf<String?>(null) }
     var isFormValid by remember { mutableStateOf(false) }
-
-    // Leer datos de usuarios al iniciar la pantalla
-    val usersList by userPreferences.userPreferencesFlow.collectAsState(initial = emptyList())
 
     // Validación de formulario
     fun validateForm() {
@@ -85,27 +82,51 @@ fun LoginScreen() {
         }
     }
 
-    // Validar credenciales
+    // Validar credenciales con Firebase
     fun validateCredentials() {
         validateForm()
         if (isFormValid) {
-            val user = usersList.find { it.correo == email && it.password == password }
-            if (user != null) {
-                val sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putString("userName", user.nombreCompleto)
-                editor.putString("userEmail", user.correo)
-                editor.apply()
-                vibrate(context, true)
-                val intent = Intent(context, MenuActivity::class.java)
-                context.startActivity(intent)
+            val database = FirebaseDatabase.getInstance().getReference("user")
+            database.orderByChild("correo").equalTo(email).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (userSnapshot in snapshot.children) {
+                            val dbPassword = userSnapshot.child("password").getValue(String::class.java)
+                            if (dbPassword == password) {
+                                // Autenticación exitosa
+                                val userName = userSnapshot.child("nombreCompleto").getValue(String::class.java)
 
-                //(context as Activity).finish()
+                                // Guardar el nombre y el correo del usuario en SharedPreferences
+                                val sharedPreferences = context.getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+                                val editor = sharedPreferences.edit()
+                                editor.putString("userName", userName)
+                                editor.putString("userEmail", email)
+                                editor.apply()
 
-            } else {
-                vibrate(context, false)
-                emailError = "Credenciales incorrectas"
-            }
+                                vibrate(context, true)
+                                val intent = Intent(context, MenuActivity::class.java)
+                                context.startActivity(intent)
+
+                                //(context as Activity).finish()
+                            } else {
+                                // Contraseña incorrecta
+                                vibrate(context, false)
+                                passwordError = "Contraseña incorrecta"
+                            }
+                        }
+                    } else {
+                        // El correo no está registrado
+                        vibrate(context, false)
+                        emailError = "Correo no registrado"
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Manejo de errores con la base de datos
+                    vibrate(context, false)
+                    emailError = "Error de conexión con la base de datos"
+                }
+            })
         }
     }
 

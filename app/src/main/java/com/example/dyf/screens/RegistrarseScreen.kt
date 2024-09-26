@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import com.example.dyf.LoginActivity
 import com.example.dyf.data.UserData
 import com.example.dyf.data.UserPreferences
+import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -454,34 +456,48 @@ fun RegistrarseScreen(userPreferences: UserPreferences = UserPreferences(LocalCo
                 onClick = {
                     if (validateForm()) {
                         CoroutineScope(Dispatchers.IO).launch {
-                            val currentUsers = userPreferences.getUsers()
+                            val database = FirebaseDatabase.getInstance()
+                            val ref = database.getReference("user")
 
-                            // Verificar si el RUT o correo ya está registrado
-                            val rutExists = currentUsers.any { it.rut == rut }
-                            val correoExists = currentUsers.any { it.correo == correo }
+                            // Verificar primero si el RUT ya existe
+                            ref.orderByChild("rut").equalTo(rut).get().addOnCompleteListener { rutTask ->
+                                if (rutTask.isSuccessful && rutTask.result.exists()) {
+                                    // Si ya existe un usuario con ese RUT
+                                    errorMessage = "El RUT $rut ya está registrado."
+                                    showErrorDialog = true
+                                    vibrate(context, false)
+                                } else {
+                                    // Verificar si el correo ya está registrado
+                                    ref.orderByChild("correo").equalTo(correo).get().addOnCompleteListener { correoTask ->
+                                        if (correoTask.isSuccessful && correoTask.result.exists()) {
+                                            // Si ya existe un usuario con ese correo
+                                            errorMessage = "El correo $correo ya está registrado."
+                                            showErrorDialog = true
+                                            vibrate(context, false)
+                                        } else {
+                                            // Si el RUT y el correo no existen, registrar el nuevo usuario
+                                            val newUser = UserData(
+                                                rut = rut,
+                                                nombreCompleto = nombreCompleto,
+                                                correo = correo,
+                                                password = password,
+                                                recibirNotificaciones = recibirNotificaciones
+                                            )
 
-                            if (rutExists || correoExists) {
-                                errorMessage = when {
-                                    rutExists -> "El RUT $rut ya está registrado."
-                                    correoExists -> "El correo $correo ya está registrado."
-                                    else -> "Error al registrar."
+                                            ref.push().setValue(newUser).addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    successMessage = "El usuario $nombreCompleto ha sido registrado exitosamente."
+                                                    showSuccessDialog = true
+                                                    vibrate(context, true)
+                                                } else {
+                                                    errorMessage = "Error al registrar el usuario."
+                                                    showErrorDialog = true
+                                                    vibrate(context, false)
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
-                                showErrorDialog = true
-                                vibrate(context, false)
-                            } else {
-                                val newUser = UserData(
-                                    rut = rut,
-                                    nombreCompleto = nombreCompleto,
-                                    correo = correo,
-                                    password = password,
-                                    recibirNotificaciones = recibirNotificaciones
-                                )
-                                val updatedUsers = currentUsers.toMutableList().apply { add(newUser) }
-                                userPreferences.saveUserPreferences(updatedUsers)
-
-                                successMessage = "El usuario $nombreCompleto ha sido registrado exitosamente."
-                                showSuccessDialog = true
-                                vibrate(context, true)
                             }
                         }
                     }
@@ -492,6 +508,9 @@ fun RegistrarseScreen(userPreferences: UserPreferences = UserPreferences(LocalCo
             ) {
                 Text("Registrarse", fontSize = 20.sp, color = Color(0xFF000000))
             }
+
+
+
         }
 
         // Diálogo de éxito

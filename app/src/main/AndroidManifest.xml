@@ -15,6 +15,16 @@
         android:theme="@style/Theme.Dyf"
         tools:targetApi="31">
         <activity
+            android:name=".ui.theme.ui.theme.CambioPasswordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_cambio_password"
+            android:theme="@style/Theme.Dyf" />
+        <activity
+            android:name=".ui.theme.CambioPasswordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_cambio_password"
+            android:theme="@style/Theme.Dyf" />
+        <activity
             android:name=".MenuActivity"
             android:exported="false"
             android:label="@string/title_activity_menu"
@@ -24,7 +34,6 @@
             android:exported="false"
             android:label="@string/title_activity_olvidaste"
             android:theme="@style/Theme.Dyf" />
-
         <activity
             android:name=".RegistrarseActivity"
             android:exported="false"
@@ -34,14 +43,11 @@
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Dyf">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <!--
-            <category android:name="android.intent.category.LAUNCHER" />
-            -->
-        </intent-filter>
-    </activity>
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true"

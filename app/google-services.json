@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "780996114781",
+    "firebase_url": "https://appmovildyf-default-rtdb.firebaseio.com",
+    "project_id": "appmovildyf",
+    "storage_bucket": "appmovildyf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780996114781:android:c86dbee11653f6851f50b4",
+        "android_client_info": {
+          "package_name": "com.example.dyf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrzDM2radFN_lBSAJQUgtpymQM-8lO994"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

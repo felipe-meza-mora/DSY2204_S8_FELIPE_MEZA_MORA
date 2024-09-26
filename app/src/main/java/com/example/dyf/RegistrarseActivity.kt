@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.dyf.screens.RegistrarseScreen
-import com.example.dyf.ui.theme.DyfTheme
+import com.example.dyf.ui.theme.ui.theme.ui.theme.DyfTheme
 
 
 class RegistrarseActivity : ComponentActivity() {
