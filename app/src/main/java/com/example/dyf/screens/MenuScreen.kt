@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dyf.CambioPasswordActivity
+import com.example.dyf.EscribirYHablarActivity // Nueva Activity para Escribir y Hablar
 import com.example.dyf.LoginActivity
 import com.example.dyf.R
 
@@ -164,6 +166,27 @@ fun MenuScreen() {
                     fontWeight = FontWeight.Normal,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Botón para Escribir y Hablar
+                Button(
+                    onClick = {
+                        val intent = Intent(context, EscribirYHablarActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Escribir y Hablar",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Escribir y Hablar", fontSize = 18.sp, color = Color.White)
+                }
             }
         }
     }

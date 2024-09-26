@@ -15,6 +15,16 @@
         android:theme="@style/Theme.Dyf"
         tools:targetApi="31">
         <activity
+            android:name=".EscribirYHablarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_escribir_yhablar"
+            android:theme="@style/Theme.Dyf" />
+        <activity
+            android:name=".screens.EscribirYHablarActivity"
+            android:exported="false"
+            android:label="@string/title_activity_escribir_yhablar"
+            android:theme="@style/Theme.Dyf" />
+        <activity
             android:name=".CambioPasswordActivity"
             android:exported="false"
             android:label="@string/title_activity_cambio_password"

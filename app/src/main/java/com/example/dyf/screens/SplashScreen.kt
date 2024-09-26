@@ -60,10 +60,10 @@ fun SplashScreen(){
     ) {
        Image(
            painter = painterResource(id = R.drawable.dyf),
-           contentDescription = "Logo DyF"
+           contentDescription = "Sonido Inclusivo"
        )
        Text(
-           text = "Bienvenidos",
+           text = "Bienvenidos a Sonido Inclusivo",
            style = MaterialTheme.typography.titleLarge,
            color = MaterialTheme.colorScheme.onSecondaryContainer
        )
