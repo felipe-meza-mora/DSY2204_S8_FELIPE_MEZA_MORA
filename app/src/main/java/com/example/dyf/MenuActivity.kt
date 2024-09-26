@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.dyf.screens.MenuScreen
-import com.example.dyf.ui.theme.ui.theme.ui.theme.DyfTheme
+import com.example.dyf.ui.theme.DyfTheme
 
 class MenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

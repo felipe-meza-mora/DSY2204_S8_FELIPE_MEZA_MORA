@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.dyf.data.UserPreferences
-import com.example.dyf.ui.theme.ui.theme.ui.theme.DyfTheme
+import com.example.dyf.ui.theme.DyfTheme
 
 class OlvidasteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

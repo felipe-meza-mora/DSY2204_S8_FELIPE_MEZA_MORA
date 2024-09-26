@@ -101,6 +101,7 @@ fun LoginScreen() {
                                 val editor = sharedPreferences.edit()
                                 editor.putString("userName", userName)
                                 editor.putString("userEmail", email)
+                                editor.putString("userPassword",password)
                                 editor.apply()
 
                                 vibrate(context, true)

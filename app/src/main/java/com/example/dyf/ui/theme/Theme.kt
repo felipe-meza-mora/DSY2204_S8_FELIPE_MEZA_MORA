@@ -1,4 +1,4 @@
-package com.example.dyf.ui.theme.ui.theme.ui.theme
+package com.example.dyf.ui.theme
 
 import android.app.Activity
 import android.os.Build

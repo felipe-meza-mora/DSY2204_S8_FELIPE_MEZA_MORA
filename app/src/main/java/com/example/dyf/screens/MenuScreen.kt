@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.dyf.CambioPasswordActivity
 import com.example.dyf.LoginActivity
 import com.example.dyf.R
 
@@ -104,11 +106,18 @@ fun MenuScreen() {
                             modifier = Modifier.background(Color(0xFFFFC107))
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Cambiar Contraseña") },
+                                text = { Text("Cambiar Password") },
                                 onClick = {
                                     vibrate(context, false)
-                                    /*val intent = Intent(context, CambioPasswordActivity::class.java)
-                                    context.startActivity(intent) */
+                                    val intent = Intent(context, CambioPasswordActivity::class.java)
+                                    context.startActivity(intent)
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = "Cambiar Password",
+                                        tint = Color.Black
+                                    )
                                 }
                             )
 

@@ -1,4 +1,4 @@
-package com.example.dyf.ui.theme.ui.theme.ui.theme
+package com.example.dyf.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
