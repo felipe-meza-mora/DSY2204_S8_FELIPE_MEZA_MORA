@@ -7,4 +7,5 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_cambio_password">CambioPasswordActivity</string>
     <string name="title_activity_escribir_yhablar">EscribirYHablarActivity</string>
+    <string name="title_activity_buscar_dispositivo">BuscarDispositivoActivity</string>
 </resources>

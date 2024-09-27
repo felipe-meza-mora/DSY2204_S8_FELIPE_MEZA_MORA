@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,9 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dyf.CambioPasswordActivity
-import com.example.dyf.EscribirYHablarActivity // Nueva Activity para Escribir y Hablar
+import com.example.dyf.EscribirYHablarActivity
 import com.example.dyf.LoginActivity
 import com.example.dyf.R
+import com.example.dyf.BuscarDispositivoActivity // Activity para la funcionalidad de buscar dispositivo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -186,6 +188,27 @@ fun MenuScreen() {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Escribir y Hablar", fontSize = 18.sp, color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Botón para Buscar Dispositivo (Geolocalización)
+                Button(
+                    onClick = {
+                        val intent = Intent(context, BuscarDispositivoActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Obtener Ubicación",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Obtener Ubicación", fontSize = 18.sp, color = Color.White)
                 }
             }
         }

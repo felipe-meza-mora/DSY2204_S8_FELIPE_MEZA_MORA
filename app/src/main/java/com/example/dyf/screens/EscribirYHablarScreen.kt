@@ -92,7 +92,7 @@ fun EscribirYHablarScreen() {
             color = Color.Black,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        
+
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
