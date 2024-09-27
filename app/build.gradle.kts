@@ -71,11 +71,23 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.play.services.identity)
     implementation(libs.material)
-    testImplementation(libs.junit)
+    implementation(libs.androidx.junit.ktx)
+    /*testImplementation(libs.junit) */
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation("org.mockito:mockito-inline:4.0.0")
+    testImplementation ("org.robolectric:robolectric:4.9")
+    /*
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+     */
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("org.mockito:mockito-android:4.0.0")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.0.5")
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.5.0")
 }

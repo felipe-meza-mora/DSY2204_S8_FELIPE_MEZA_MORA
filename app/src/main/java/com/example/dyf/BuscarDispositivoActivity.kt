@@ -86,6 +86,5 @@ class BuscarDispositivoActivity : ComponentActivity() {
 
     private fun updateUIWithLocation(location: Location) {
         Log.d("Location", "Latitud: ${location.latitude}, Longitud: ${location.longitude}")
-        // Aquí puedes agregar el código para actualizar la UI con la ubicación obtenida
     }
 }
