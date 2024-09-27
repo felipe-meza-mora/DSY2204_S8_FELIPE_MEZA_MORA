@@ -11,11 +11,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -31,6 +33,7 @@ import com.example.dyf.EscribirYHablarActivity
 import com.example.dyf.LoginActivity
 import com.example.dyf.R
 import com.example.dyf.BuscarDispositivoActivity // Activity para la funcionalidad de buscar dispositivo
+import com.example.dyf.EscuchaPorMiActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -181,17 +184,38 @@ fun MenuScreen() {
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Escribir y Hablar",
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = "Habla por Mí",
                         modifier = Modifier.size(24.dp),
                         tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Escribir y Hablar", fontSize = 18.sp, color = Color.White)
+                    Text("Habla por Mí", fontSize = 18.sp, color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                /*
+                Button(
+                    onClick = {
+                        val intent = Intent(context, EscuchaPorMiActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Call,
+                        contentDescription = "Escucha por Mí",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Escucha por Mí", fontSize = 18.sp, color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                 */
                 // Botón para Buscar Dispositivo (Geolocalización)
                 Button(
                     onClick = {
@@ -208,7 +232,7 @@ fun MenuScreen() {
                         tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Obtener Ubicación", fontSize = 18.sp, color = Color.White)
+                    Text("Obtener Mí Ubicación", fontSize = 18.sp, color = Color.White)
                 }
             }
         }

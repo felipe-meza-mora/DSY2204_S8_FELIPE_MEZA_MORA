@@ -37,7 +37,7 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BuscarDispositivoScreen(
-    requestLocation: (Location) -> Unit
+    requestLocation: () -> Unit
 ) {
     val context = LocalContext.current
     var locationText by remember { mutableStateOf("Ubicación no obtenida") }
@@ -94,6 +94,7 @@ fun BuscarDispositivoScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(onClick = {
+            requestLocation()
             // Ejecutar la lógica en una corrutina
             scope.launch {
                 // Obtener la última ubicación
@@ -118,7 +119,7 @@ fun BuscarDispositivoScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
 
-            Text(text = "Obtener Ubicación")
+            Text(text = "Obtener Mí Ubicación")
         }
     }
 }
